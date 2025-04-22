@@ -2,6 +2,7 @@ import "./App.css";
 import { Hero } from "./components/ui/hero-with-image-text-and-two-buttons";
 import { NavBar } from "./components/ui/nav-bar";
 import { Footer } from "./components/ui/footer";
+import { Feature } from "./components/ui/feature-with-advantages";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <main className="flex-1">
         <Hero />
       </main>
+      <Feature />
       <Footer />
     </div>
   );
