@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Room from "./pages/room.tsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -12,6 +13,22 @@ const router = createBrowserRouter([
   {
     path: "/room",
     element: <Room />,
+  },
+  {
+    path: "/features",
+    element: (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Features page coming soon
+      </div>
+    ),
+  },
+  {
+    path: "/contact",
+    element: (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Contact page coming soon
+      </div>
+    ),
   },
 ]);
 
