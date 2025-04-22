@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import { Hero } from "./components/ui/hero-with-image-text-and-two-buttons";
 
