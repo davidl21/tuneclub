@@ -33,6 +33,53 @@ app.get("/login", (req, res) => {
   );
 });
 
+app.get("/callback", async (req, res) => {
+  const code = req.query.code || null;
+  const state = req.query.state || null;
+
+  if (state === null) {
+    res.redirect(
+      "/#" +
+        querystring.stringify({
+          error: "state_mismatch",
+        })
+    );
+  } else {
+    const authOptions = {
+      url: "https://accounts.spotify.com/api/token",
+      form: {
+        code: code,
+        redirect_uri: REDIRECT_URI,
+        grant_type: "authorization_code",
+      },
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic" +
+          new Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString("base64"),
+      },
+      json: true,
+    };
+
+    try {
+      const response = await axios.post(
+        authOptions.url,
+        querystring.stringify(authOptions.form),
+        {
+          headers: authOptions.headers,
+        }
+      );
+
+      const { access_token, token_type, scope, expires_in, refresh_token } =
+        response.data;
+      // TODO: Process tokens/response
+    } catch (error) {
+      console.error("Error exchanging code for tokens:", error);
+      res.status(500).send("Error exchanging code for tokens");
+    }
+  }
+});
+
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
 });
