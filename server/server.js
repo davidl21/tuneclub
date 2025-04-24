@@ -72,7 +72,8 @@ app.get("/callback", async (req, res) => {
 
       const { access_token, token_type, scope, expires_in, refresh_token } =
         response.data;
-      // TODO: Process tokens/response
+
+      res.json({ access_token, token_type, scope, expires_in, refresh_token });
     } catch (error) {
       console.error("Error exchanging code for tokens:", error);
       res.status(500).send("Error exchanging code for tokens");

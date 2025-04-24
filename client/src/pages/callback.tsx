@@ -10,8 +10,6 @@ const Callback = () => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     const state = params.get("state");
-
-    // error if user does not accept request or error occurred
     const error = params.get("error");
 
     if (error) {
@@ -21,11 +19,26 @@ const Callback = () => {
     }
 
     if (code) {
-      // TODO: request access token, exchange auth code for access token.
-    }
-  });
+      const fetchAccessToken = async () => {
+        try {
+          const response = await axios.post("http://localhost:8080/callback", {
+            code,
+            state,
+          });
 
-  return <div>callback</div>;
+          const { access_token, expires_in } = response.data;
+          console.log("Access Token:", access_token);
+          navigate("/dashboard");
+        } catch (error) {
+          console.error("Error fetching access token:", error);
+        }
+      };
+
+      fetchAccessToken();
+    }
+  }, [navigate]);
+
+  return <div>Processing authentication...</div>;
 };
 
 export default Callback;
